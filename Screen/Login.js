@@ -19,12 +19,10 @@ export default function Login() {
     const [name, setName] = useState(0);
     const [email, setEmail] = useState('');
     const[data,setData]= useState([]);
-    const[Famille,setFamille]= useState([]);
-    const[prof,setProf]= useState([]);
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
     useEffect(() => {
-        axios.get("https://sidi-cnm.github.io/FrontApi/Admin.json")
+        axios.get("https://sidi-cnm.github.io/FrontApi/utilisateur.json")
           .then((res) => {
             setData(res.data);
           })
@@ -32,15 +30,6 @@ export default function Login() {
             console.error('Error fetching data:', error);
           });
 
-          axios.get("https://sidi-cnm.github.io/FrontApi/Famille.json")
-           .then((res) => {
-            setFamille(res.data)
-           });
-
-          axios.get("https://sidi-cnm.github.io/FrontApi/Proffeseur.json") 
-            .then((res)=>{
-              setProf(res.data)
-            });
      
       }, []);
     
@@ -59,19 +48,20 @@ export default function Login() {
       };
 
     const Log=()=>{
-        const Admin = data.find((item) => item.email == name && item.mot_de_pass === email);
-        const famille = Famille.find((item) => item.Numero_telephone == name && item.Prénom === email);
-        const profes = prof.find((item) => item.Numero_de_telephone == name && item.Prénom === email);
-        if(profes){
-          Navigation.navigate('IN')
+        const connecter = data.find((item) => item.Numero_de_telephone == name && item.Psswd === email);
+        if(connecter){
+          if(connecter.etudiant){
+            console.log("etudiant")
+          }
+          else if(connecter.prof){
+            console.log("prof")
+          }
+          else if(connecter.famille){
+            console.log("famille")
+          }
+            // Navigation.navigate('IN')
         }
-        else if(famille){
-          console.log("famille")
-        }
-
-        else if(Admin){
-          console.log("admin")
-        }
+       
 
         else{
             showErrorAlert();
