@@ -127,14 +127,15 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'white',
       padding: 50,
+      paddingTop:100,
       borderWidth: 1,
-      borderColor: 'lightgray',
-      marginTop:90,
-      marginBottom:60,
+      borderColor: 'white',
+      marginTop:0,
+      marginBottom:-6,
       borderTopLeftRadius:100,
       borderTopRightRadius:100,
-      borderBottomLeftRadius:150,
-      borderBottomRightRadius:150,
+      borderBottomLeftRadius:100,
+      borderBottomRightRadius:100,
     },
     
     input: {
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
       borderWidth: 1, 
       borderRadius:50,
       marginVertical:5,
-      marginBottom: 25,
+      marginBottom: 40,
       paddingRight: 50,
       width:300,
       shadowColor: 'black', 
@@ -178,6 +179,7 @@ const styles = StyleSheet.create({
     link: {
       color: 'blue',
       textDecorationLine: 'underline',
+      paddingTop:20
     },
     header: {
         alignItems: 'center',
