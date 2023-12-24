@@ -16,7 +16,7 @@ import Modal from 'react-native-modal';
 
 export default function Login() {
   
-    const [name, setName] = useState(0);
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const[data,setData]= useState([]);
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
@@ -25,6 +25,7 @@ export default function Login() {
         axios.get("https://sidi-cnm.github.io/FrontApi/utilisateur.json")
           .then((res) => {
             setData(res.data);
+            console.log(res.data)
           })
           .catch((error) => {
             console.error('Error fetching data:', error);
@@ -49,17 +50,21 @@ export default function Login() {
 
     const Log=()=>{
         const connecter = data.find((item) => item.Numero_de_telephone == name && item.Psswd === email);
+        
         if(connecter){
           if(connecter.etudiant){
             console.log("etudiant")
           }
           else if(connecter.prof){
             console.log("prof")
+              Navigation.navigate('IN')
           }
           else if(connecter.famille){
             console.log("famille")
-          }
             // Navigation.navigate('IN')
+
+          }
+            
         }
        
 

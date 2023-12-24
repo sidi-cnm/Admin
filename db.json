@@ -1,21 +1,78 @@
 {
-    "posts": [
-      {
-        "id": 1,
-        "title": "json-server1",
-        "author": "typicode1"
-      },
-  
-      {
-        "id": 2,
-        "title": "json-server2",
-        "author": "typicode2"
-      },
-      {
-        "id": 3,
-        "title": "json-server3",
-        "author": "typicode3"
-      }
-    ]
-    
-  }
+  "users": [
+    {
+      "title": "cherive",
+      "id": 4
+    },
+    {
+      "title": "ssss",
+      "id": 6
+    },
+    {
+      "title": "hhhh",
+      "id": 7
+    },
+    {
+      "title": "test1",
+      "id": 8
+    },
+    {
+      "title": "lql",
+      "id": 9
+    },
+    {
+      "title": "ppp",
+      "id": 10
+    },
+    {
+      "title": "sj",
+      "id": 11
+    },
+    {
+      "title": "gff",
+      "id": 12
+    }
+  ],
+  "cours": [
+    {
+      "name": "Demin carni",
+      "id": 1,
+      "heur": "22:30",
+      "dater": "22-24-22023",
+      "Nbrseance": 4,
+      "Status": "Paye",
+      "id_prenant": 1,
+      "id_professeur": 3
+    },
+    {
+      "name": "Emin taleb ahmed",
+      "id": 1,
+      "heur": "22:30",
+      "dater": "22-24-22023",
+      "Nbrseance": 4,
+      "Status": "Paye",
+      "id_prenant": 1,
+      "id_professeur": 3
+    },
+    {
+      "name": "Sidi Ebeidy",
+      "id": 2,
+      "heur": "22:30",
+      "dater": "22-24-22023",
+      "Nbrseance": 4,
+      "Status": "Paye",
+      "id_prenant": 1,
+      "id_professeur": 3
+    },
+    {
+      "name": "Med nouhe",
+      "id": 3,
+      "heur": "22:30",
+      "dater": "22-24-22023",
+      "Nbrseance": 4,
+      "Status": "Paye",
+      "id_prenant": 2,
+      "id_professeur": 3
+    }
+  ]
+}
