@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import {  Text,StyleSheet, TextInput ,FlatList ,TouchableOpacity, View } from 'react-native';
+import {  Text,StyleSheet, TextInput ,FlatList , ScrollView ,TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 import BottomSheet from '@gorhom/bottom-sheet';
 import FmComponent from '../component/famille-component'
@@ -25,30 +25,24 @@ export default function Test(){
     const [totalPages, setTotalPages] = useState(1);
     
 
-    const handleDelte=()=>{
-      
-      console.log("c`est bon sa marche");
-    }
+    
 
     useEffect(() => {
-      axios
-        .get(`https://cb66-41-188-105-168.ngrok-free.app/users/?page=${currentPage}`)
+      axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/")
         .then((res) => {
           console.log("Data from API:", res.data);
-          setData((prevData) => (currentPage === 1 ? res.data : [...prevData, ...res.data]));
-          setTotalPages(res.data.totalPages, () => {
-            console.log(totalPages);
-          });
-          //console.log(totalPages);
+          setData(res.data);
         })
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
-    }, [currentPage, change]);
+
+   
+    }, [change]);
     
 
 
-  const snapPoints = useMemo(() => ['15%', '50%'], []);
+  const snapPoints = useMemo(() => ['1%', '22%'], []);
   const refBottomSheet = useRef(null);
 
   const handleSelectUser = (userId) => {
@@ -58,46 +52,92 @@ export default function Test(){
   };
   
 
-  const handleAdd = () => {
-    if (ajouter.title === "") {
-      console.log("Saisissez des données ici");
-    } else {
-      axios.post("https://cb66-41-188-105-168.ngrok-free.app/users", ajouter)
-        .then(() => {
-          // Fetch the updated data after adding a new user
-          return axios.get("https://cb66-41-188-105-168.ngrok-free.app/users/");
-        })
-        .then((res) => {
-          setData(res.data);
-          setShowForm(false);
-          setAjouter({ title: "" });
-        })
-        .catch((error) => {
-          console.error("Error adding user:", error);
-        });
-    }
-  };
+  // const handleAdd = () => {
+  //   if (ajouter.title === "") {
+  //     console.log("Saisissez des données ici");
+  //   } else {
+  //     axios.post("https://2e74-41-188-105-168.ngrok-free.app/users", ajouter)
+  //       .then(() => {
+  //         // Fetch the updated data after adding a new user
+  //         return axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/");
+  //       })
+  //       .then((res) => {
+  //         setData(res.data);
+  //         setShowForm(false);
+  //         setAjouter({ title: "" });
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error adding user:", error);
+  //       });
+  //   }
+  // };
   
+  // const handleDelete = () => {
+  //   if (selectedUserId !== null) {
+  //     axios.delete(`https://2e74-41-188-105-168.ngrok-free.app/users/${selectedUserId}`)
+  //       .then(() => {
+  //         // Fetch the updated data after deleting the user
+  //         return axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/");
+  //       })
+  //       .then((res) => {
+  //         setData(res.data);
+  //         refBottomSheet.current?.close();
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error deleting user:", error);
+  //       });
+  //   } else {
+  //     console.warn("No user selected for deletion");
+  //     refBottomSheet.current?.close();
+  //   }
+  // };
+  
+
+  const handleAdd=() =>{
+
+    if(ajouter.title === ""){
+      console.log("saisi des donner ici");
+    }
+    else{
+      axios.post("https://2e74-41-188-105-168.ngrok-free.app/users" , ajouter);
+      setIschange(!change);
+      setShowForm(false);
+      setAjouter({title:""})
+    }
+   
+  }
+
   const handleDelete = () => {
     if (selectedUserId !== null) {
-      axios.delete(`https://cb66-41-188-105-168.ngrok-free.app/users/${selectedUserId}`)
-        .then(() => {
-          // Fetch the updated data after deleting the user
-          return axios.get("https://cb66-41-188-105-168.ngrok-free.app/users/");
-        })
-        .then((res) => {
-          setData(res.data);
-          refBottomSheet.current?.close();
+      // Utilisez Axios pour supprimer l'utilisateur via une requête DELETE à votre API
+      //console.log(selectedUserId);
+      axios.delete(`https://2e74-41-188-105-168.ngrok-free.app/users/${selectedUserId}`)
+        .then((response) => {
+          // Vérifiez la réponse de l'API
+          if (response.status === 200) {
+            console.log("User with ID", selectedUserId, "has been deleted");
+            
+            // Mettez à jour l'état des données localement si nécessaire
+            const newData = data.filter((item) => item.ID !== selectedUserId);
+            //setData(newData);
+            setIschange(!change);
+          } 
+          else {
+            console.error("Failed to delete user. API response:", response);
+          }
         })
         .catch((error) => {
           console.error("Error deleting user:", error);
+        })
+        .finally(() => {
+          // Fermez la feuille inférieure après la suppression
+          refBottomSheet.current?.close();
         });
     } else {
       console.warn("No user selected for deletion");
       refBottomSheet.current?.close();
     }
   };
-  
  
 
   
@@ -113,17 +153,17 @@ export default function Test(){
 
  
 
-  const handleLoadMore = () => {
-    console.log('Loading more data...');
-    console.log(totalPages)
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+  // const handleLoadMore = () => {
+  //   console.log('Loading more data...');
+  //   console.log(totalPages)
+  //   if (currentPage < totalPages) {
+  //     setCurrentPage((prevPage) => prevPage + 1);
+  //   }
+  // };
 
   const handleSearch = (text) => {
     setSearch(text);
-    setCurrentPage(1); 
+    //setCurrentPage(1); 
     const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase()));
     //  setData(filteredData);
     //setData(text.trim() === '' ? data : filteredData);
@@ -141,9 +181,24 @@ export default function Test(){
       
     
     
-  const renderItem = ({ item }) => (
-  <FmComponent data={item} onPress={() => handleSelectUser(item.id)} /> 
+    const renderItem = ({ item }) => (
+    
+      <FmComponent data={item} onPress={() => handleSelectUser(item.id)} /> 
+   
       );
+
+
+      const handleScroll = (event) => {
+        const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+        const paddingToBottom = 20;
+    
+        if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
+          // L'utilisateur a atteint le bas, chargez plus de données
+          if (currentPage < totalPages) {
+            setCurrentPage((prevPage) => prevPage + 1);
+          }
+        }
+      };
 
   
     const Navigation = useNavigation()
@@ -154,6 +209,8 @@ export default function Test(){
 
     return(
 
+      
+    
       <GestureHandlerRootView >
         <View style={styles.container}>
 
@@ -189,24 +246,20 @@ export default function Test(){
           </View>
         )}
       
-        <FlatList
+        {/* <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.1}
         ListHeaderComponent={<View style={styles.headerSpace}
-        ListFooterComponent={() => (
-        <Button
-          title="Load More"
-          onPress={handleLoadMore}
-          disabled={currentPage >= totalPages}
-        />
-      )}
         
          />}
-          />
-
+          /> */}
+    
+      <ScrollView>
+             {data.map((item) => (
+                 <FmComponent key={item.id} data={item} onPress={() => handleSelectUser(item.id)} />
+              ))}  
+       </ScrollView>
         
         <BottomSheet style={styles.bottoms} index={0} ref={refBottomSheet} snapPoints={snapPoints}>
           <View style={styles.contentContainer}>
@@ -231,12 +284,13 @@ export default function Test(){
     
       </View>
     </GestureHandlerRootView> 
+   
     );
 }
 
 const styles = StyleSheet.create({
   container: {
-   height:1233,
+   height:"100%",
    width:'auto'
   },
   overlay: {

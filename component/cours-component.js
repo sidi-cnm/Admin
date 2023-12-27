@@ -21,7 +21,6 @@ export default function CrComponent({ data }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOpacity: 0.9,
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
     elevation: 15,
     borderRadius: 20,
     width: 350,
-    margin: 5,
+    marginTop:20,
+    marginBottom:5,
     left:10
   },
   infoContainer: {

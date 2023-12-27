@@ -21,16 +21,8 @@
       "id": 9
     },
     {
-      "title": "ppp",
-      "id": 10
-    },
-    {
       "title": "sj",
       "id": 11
-    },
-    {
-      "title": "gff",
-      "id": 12
     }
   ],
   "cours": [
@@ -41,7 +33,7 @@
       "dater": "22-24-22023",
       "Nbrseance": 4,
       "Status": "Paye",
-      "id_prenant": 1,
+      "id_prenant": 4,
       "id_professeur": 3
     },
     {
@@ -61,7 +53,7 @@
       "dater": "22-24-22023",
       "Nbrseance": 4,
       "Status": "Paye",
-      "id_prenant": 1,
+      "id_prenant": 4,
       "id_professeur": 3
     },
     {

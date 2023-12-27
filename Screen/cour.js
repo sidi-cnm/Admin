@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
 import CrComponent from "../component/cours-component"
 import { TextInput } from 'react-native-gesture-handler';
+import { Button } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Cours() {
   const route = useRoute();
@@ -12,7 +14,7 @@ export default function Cours() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`https://cb66-41-188-105-168.ngrok-free.app/cours/?id_prenant=${id}`)
+    axios.get(`https://2e74-41-188-105-168.ngrok-free.app/cours/?id_prenant=${id}`)
       .then((res) => {
         setData(res.data);
       })
@@ -28,9 +30,32 @@ export default function Cours() {
     )
   };
 
+  const nav = useNavigation()
+  const back =()=>{
+    nav.navigate("IN")
+  }
+
   return (
     <View style={styles.container}>
-       
+
+       <Button  buttonStyle={{
+          backgroundColor: '#0A1C7A',
+          borderRadius: 10,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          left:280,
+          height:33,
+          width:80}} 
+          titleStyle={{
+             left:5,
+             height:20,
+             top:-3
+          }}
+          onPress={back}
+          title="back"
+
+          />
+       <Text style={{top:-38, left:-160, fontSize:29, fontWeight:"bold"}}>Cours</Text>
        <TextInput
          placeholder='name'
          style={styles.inpt}
@@ -39,15 +64,23 @@ export default function Cours() {
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
+        style={styles.flat}
       />
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    height:"100%",
     flex: 1, 
     marginTop:110,
+  },
+
+  flat:{
+    display:"flex",
+    height:"100%"
   },
 
   inpt:{
