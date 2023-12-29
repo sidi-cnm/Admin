@@ -18,17 +18,22 @@ export default function Test(){
     const[change, setIschange]=useState(false);
     const [showForm, setShowForm] = useState(false);
     const[ajouter, setAjouter]=useState({
-      title:""
+      title:"",
+      place:"",
+      Email:"",
+      Numero:null,
+      Id_infant:null,
     })
   
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const Navigation = useNavigation()
     
 
     
 
     useEffect(() => {
-      axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/")
+      axios.get("https://4c61-41-188-104-99.ngrok-free.app/users/")
         .then((res) => {
           console.log("Data from API:", res.data);
           setData(res.data);
@@ -51,46 +56,6 @@ export default function Test(){
     refBottomSheet.current?.expand();
   };
   
-
-  // const handleAdd = () => {
-  //   if (ajouter.title === "") {
-  //     console.log("Saisissez des données ici");
-  //   } else {
-  //     axios.post("https://2e74-41-188-105-168.ngrok-free.app/users", ajouter)
-  //       .then(() => {
-  //         // Fetch the updated data after adding a new user
-  //         return axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/");
-  //       })
-  //       .then((res) => {
-  //         setData(res.data);
-  //         setShowForm(false);
-  //         setAjouter({ title: "" });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error adding user:", error);
-  //       });
-  //   }
-  // };
-  
-  // const handleDelete = () => {
-  //   if (selectedUserId !== null) {
-  //     axios.delete(`https://2e74-41-188-105-168.ngrok-free.app/users/${selectedUserId}`)
-  //       .then(() => {
-  //         // Fetch the updated data after deleting the user
-  //         return axios.get("https://2e74-41-188-105-168.ngrok-free.app/users/");
-  //       })
-  //       .then((res) => {
-  //         setData(res.data);
-  //         refBottomSheet.current?.close();
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error deleting user:", error);
-  //       });
-  //   } else {
-  //     console.warn("No user selected for deletion");
-  //     refBottomSheet.current?.close();
-  //   }
-  // };
   
 
   const handleAdd=() =>{
@@ -99,7 +64,7 @@ export default function Test(){
       console.log("saisi des donner ici");
     }
     else{
-      axios.post("https://2e74-41-188-105-168.ngrok-free.app/users" , ajouter);
+      axios.post("https://4c61-41-188-104-99.ngrok-free.app/users" , ajouter);
       setIschange(!change);
       setShowForm(false);
       setAjouter({title:""})
@@ -109,17 +74,13 @@ export default function Test(){
 
   const handleDelete = () => {
     if (selectedUserId !== null) {
-      // Utilisez Axios pour supprimer l'utilisateur via une requête DELETE à votre API
-      //console.log(selectedUserId);
-      axios.delete(`https://2e74-41-188-105-168.ngrok-free.app/users/${selectedUserId}`)
+      axios.delete(`https://4c61-41-188-104-99.ngrok-free.app/users/${selectedUserId}`)
         .then((response) => {
-          // Vérifiez la réponse de l'API
           if (response.status === 200) {
             console.log("User with ID", selectedUserId, "has been deleted");
             
-            // Mettez à jour l'état des données localement si nécessaire
             const newData = data.filter((item) => item.ID !== selectedUserId);
-            //setData(newData);
+            
             setIschange(!change);
           } 
           else {
@@ -130,7 +91,7 @@ export default function Test(){
           console.error("Error deleting user:", error);
         })
         .finally(() => {
-          // Fermez la feuille inférieure après la suppression
+         
           refBottomSheet.current?.close();
         });
     } else {
@@ -151,28 +112,22 @@ export default function Test(){
     setShowForm(false);
   }
 
+  const handleInfo =()=>{
+    Navigation.navigate("detaille",  { id: selectedUserId });
+  }
+
  
 
-  // const handleLoadMore = () => {
-  //   console.log('Loading more data...');
-  //   console.log(totalPages)
-  //   if (currentPage < totalPages) {
-  //     setCurrentPage((prevPage) => prevPage + 1);
-  //   }
-  // };
+  
 
   const handleSearch = (text) => {
     setSearch(text);
-    //setCurrentPage(1); 
     const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase()));
-    //  setData(filteredData);
-    //setData(text.trim() === '' ? data : filteredData);
     console.log(text);
 
     if (text.trim() === '') {
       setIschange(!change);
     } else {
-     // const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase()));
       setData(filteredData);
     }
     
@@ -201,7 +156,7 @@ export default function Test(){
       };
 
   
-    const Navigation = useNavigation()
+  
     const handlecour = ()=>{
       console.log(selectedUserId);
       Navigation.navigate('cour' , { id: selectedUserId } );
@@ -232,15 +187,36 @@ export default function Test(){
           <TouchableOpacity style={styles.closeButton} onPress={handleCloseform}>
               <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-            <Text style={{color:"black" , position:"absolute", left:100, fontSize:29,fontWeight:"bold" , bottom:190}}>Add users</Text>
+            <Text style={{color:"black" , position:"absolute", left:95, fontSize:29,fontWeight:"bold" , bottom:390}}>Add users</Text>
             <TextInput
              value={ajouter.name}
              onChangeText={(text) => setAjouter({ ...ajouter, title: text })}
-             placeholder='name'
+             placeholder='title'
              style={styles.inputadd}
              />
+             
+             <TextInput
+               value={ajouter.place}
+               onChangeText={(text)=>setAjouter({...ajouter,place:text})}
+               placeholder='place'
+               style={styles.inputplace}
+               />
+
+             <TextInput
+               value={ajouter.Email}
+               onChangeText={(text)=>setAjouter({...ajouter,Email:text})}
+               placeholder='Email'
+               style={styles.inputemail}
+               />
+
+             <TextInput
+               value={ajouter.Numero}
+               onChangeText={(text)=>setAjouter({...ajouter,Numero:text})}
+               placeholder='Numero'
+               style={styles.inputNumero}
+               />
              <View style={styles.btnsubmit} >
-             <Button title="Submit" onPress={handleAdd} style={{color:"black"}}  />
+             <Button title="Submit" onPress={handleAdd} buttonStyle={{color:"black" , left:4, width:290 , height:45 , borderRadius:10 }}  />
              </View>
           </View>
           </View>
@@ -268,10 +244,10 @@ export default function Test(){
                <Text style={styles.textdelte}>Supprimer</Text>
             </TouchableOpacity>
 
-            <View style={styles.infoper}>
+            <TouchableOpacity onPress={handleInfo} style={styles.infoper}>
                <Icon name="info" style={styles.btninfo} size={35} type="material" color="#0A1C7A" />
                <Text style={styles.textinfo}>Info pers</Text>
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity onPress={handlecour} style={styles.cour}>
                <Icon name="info" style={styles.btncour} size={35} type="material" color="#0A1C7A" />
@@ -288,6 +264,7 @@ export default function Test(){
     );
 }
 
+
 const styles = StyleSheet.create({
   container: {
    height:"100%",
@@ -295,7 +272,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond sombre semi-transparent
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     justifyContent: 'center',
     alignItems: 'center',
     zIndex:1
@@ -393,7 +370,7 @@ const styles = StyleSheet.create({
     borderRadius:20,
     top:250,
     left: 40,
-    height:250,
+    height:450,
     width:300,
     zIndex: 1,
   },
@@ -401,21 +378,47 @@ const styles = StyleSheet.create({
   inputadd:{
     position:"absolute",
     top:80,
-    left:10,
+    left:20,
+    paddingRight:35,
     backgroundColor:"#F1F1F1",
-    width:280,
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  inputplace:{
+    position:"absolute",
+    top:140,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  inputemail:{
+    position:"absolute",
+    top:200,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  
+  inputNumero:{
+    position:"absolute",
+    top:260,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
     height:50,
     borderRadius:10
   },
   btnsubmit:{
-    position:"absolute",
-    top:160,
-    left:20,
-    borderWidth: 1, 
-    borderColor: 'black', // Couleur de la bordure
-    borderRadius: 5, // Rayon de la bordure pour arrondir les coins (optionnel)
-    padding: 0,
-    width:250
+    width:"auto",
+    top:350
   },
   closeButton: {
     position: 'absolute',

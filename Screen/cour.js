@@ -14,7 +14,7 @@ export default function Cours() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`https://2e74-41-188-105-168.ngrok-free.app/cours/?id_prenant=${id}`)
+    axios.get(`https://4c61-41-188-104-99.ngrok-free.app/cours/?id_prenant=${id}`)
       .then((res) => {
         setData(res.data);
       })
