@@ -22,7 +22,7 @@ export default function Cours() {
   });
 
   useEffect(() => {
-    axios.get(`https://f0f4-41-188-67-197.ngrok-free.app/cours/?id_prenant=${id}`)
+    axios.get(`https://ef36-41-188-101-189.ngrok-free.app/cours/?id_prenant=${id}`)
       .then((res) => {
         setData(res.data);
       })

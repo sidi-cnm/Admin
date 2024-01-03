@@ -14,7 +14,7 @@ export default function Detaille() {
   const { id } = route.params;
 
   useEffect(() => {
-    axios.get(`https://f0f4-41-188-67-197.ngrok-free.app/users/?id=${id}`).then((res) => {
+    axios.get(`https://ef36-41-188-101-189.ngrok-free.app/users/?id=${id}`).then((res) => {
       setData(res.data);
       console.log(id);
     });

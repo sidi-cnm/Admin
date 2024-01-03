@@ -33,8 +33,9 @@ export default function Test(){
     
 
     useEffect(() => {
-      axios.get("https://4c61-41-188-104-99.ngrok-free.app/users/")
+      axios.get("https://ef36-41-188-101-189.ngrok-free.app/users/")
         .then((res) => {
+          console.log("hello")
           console.log("Data from API:", res.data);
           setData(res.data);
         })
@@ -64,7 +65,7 @@ export default function Test(){
       console.log("saisi des donner ici");
     }
     else{
-      axios.post("https://f0f4-41-188-67-197.ngrok-free.app/users" , ajouter);
+      axios.post("https://ef36-41-188-101-189.ngrok-free.app/users" , ajouter);
       setIschange(!change);
       setShowForm(false);
       setAjouter({title:""})
@@ -74,7 +75,7 @@ export default function Test(){
 
   const handleDelete = () => {
     if (selectedUserId !== null) {
-      axios.delete(`https://4c61-41-188-104-99.ngrok-free.app/users/${selectedUserId}`)
+      axios.delete(`https://ef36-41-188-101-189.ngrok-free.app/users/${selectedUserId}`)
         .then((response) => {
           if (response.status === 200) {
             console.log("User with ID", selectedUserId, "has been deleted");
@@ -162,15 +163,21 @@ export default function Test(){
       Navigation.navigate('cour' , { id: selectedUserId } );
     }
 
+    const handleNouvell =()=>{
+      Navigation.navigate('Nouvell');
+    }
+
     return(
 
       
     
       <GestureHandlerRootView >
         <View style={styles.container}>
+              
 
         <Text style={{fontSize: 28,  marginTop:50 , marginRight:40}}>Liste des familles</Text>
-
+          
+        <Button title="Nouveau" onPress={handleNouvell} buttonStyle={{ backgroundColor: '#0A1C7A' , width:96 , height:38 , borderRadius:10 , left:29 }}/>
           <View style={styles.inputContainer}>
            <Button title="+" onPress={handleShowForm} buttonStyle={{ backgroundColor: '#0A1C7A' , width:46 , height:38 , borderRadius:10 }}/>
            <TextInput 

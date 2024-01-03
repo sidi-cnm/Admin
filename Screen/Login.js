@@ -56,7 +56,7 @@ export default function Login() {
             console.log("etudiant")
           }
           else if(connecter.prof){
-            console.log("prof")
+              //console.log("prof")
               Navigation.navigate('IN')
           }
           else if(connecter.famille){
