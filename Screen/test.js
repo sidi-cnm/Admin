@@ -64,7 +64,7 @@ export default function Test(){
       console.log("saisi des donner ici");
     }
     else{
-      axios.post("https://4c61-41-188-104-99.ngrok-free.app/users" , ajouter);
+      axios.post("https://f0f4-41-188-67-197.ngrok-free.app/users" , ajouter);
       setIschange(!change);
       setShowForm(false);
       setAjouter({title:""})
@@ -104,7 +104,7 @@ export default function Test(){
   
 
   const handleShowForm = () => {
-    console.log("hello")
+    //console.log("hello")
     setShowForm(true);
   };
 
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     position:"absolute",
     backgroundColor:"white",
     borderRadius:20,
-    top:250,
+    top:120,
     left: 40,
     height:450,
     width:300,

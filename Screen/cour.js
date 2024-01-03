@@ -12,9 +12,17 @@ export default function Cours() {
   const { id } = route.params;
 
   const [data, setData] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    heur: '',
+    dater:'',
+    Nbrseance:null,
+    Status:''
+    
+  });
 
   useEffect(() => {
-    axios.get(`https://4c61-41-188-104-99.ngrok-free.app/cours/?id_prenant=${id}`)
+    axios.get(`https://f0f4-41-188-67-197.ngrok-free.app/cours/?id_prenant=${id}`)
       .then((res) => {
         setData(res.data);
       })
@@ -24,9 +32,23 @@ export default function Cours() {
 
   }, [id]);
 
+
+  const handleEdit = (item)=>{
+    console.log(item.name);
+    setFormData({
+      ...formData, 
+      heur:item.heur,
+      dater:item.dater,
+      Nbrseance:item.Nbrseance.toString(),
+      Status:item.Status
+
+
+    })
+    setShowForm(true);
+  }
   const renderItem = ({ item }) => {
     return (
-      <CrComponent data={item} />
+      <CrComponent data={item} handleDelete={() => handleEdit(item)} />
     )
   };
 
@@ -66,7 +88,42 @@ export default function Cours() {
         keyExtractor={(item) => item.id.toString()}
         style={styles.flat}
       />
+      
+     { showForm && (
+      <View style={styles.formulaire}>
+           <TextInput
+            placeholder='name'
+            value={formData.heur}
+            onChangeText={(text) => setFormData({ ...formData, heur: text })}
+            style={styles.inp1}
+           />
 
+           <TextInput
+            placeholder='name'
+            value={formData.dater}
+            onChangeText={(text) => setFormData({ ...formData, dater: text })}
+            style={styles.inp2}
+           />
+
+        <TextInput
+            placeholder='name'
+            value={formData.Nbrseance}
+            onChangeText={(text) => setFormData({ ...formData, Nbrseance: text })}
+            style={styles.inp3}
+           />
+
+       <TextInput
+            placeholder='name'
+            value={formData.Status}
+            onChangeText={(text) => setFormData({ ...formData, Status: text })}
+            style={styles.inp4}
+           />
+
+      <View style={styles.btnsubmit} >
+       <Button title="Submit"  buttonStyle={{color:"black" , left:4, top:-1, width:290 , height:50 , borderRadius:10 }}  />    
+       </View>      
+      </View>
+     )}
     </View>
   );
 }
@@ -92,5 +149,60 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     paddingTop:-5,
     top:-15
-  }
+  },
+  formulaire:{
+    position:"absolute",
+    backgroundColor:"white",
+    borderRadius:20,
+    top:120,
+    left: 40,
+    height:450,
+    width:300,
+    zIndex: 1,
+  },
+  inp1:{
+    top:70,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+
+  inp2:{
+    position:"absolute",
+    top:140,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  inp3:{
+    position:"absolute",
+    top:210,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  inp4:{
+    position:"absolute",
+    top:275,
+    left:20,
+    paddingRight:35,
+    backgroundColor:"#F1F1F1",
+    width:265,
+    height:50,
+    borderRadius:10
+  },
+  btnsubmit:{
+    width:"auto",
+    height:'auto',
+    top:300
+  },
 });

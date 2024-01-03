@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { TextInput } from 'react-native-gesture-handler';
+import { Button } from 'react-native-elements';
 
-export default function CrComponent({ data }) {
+export default function CrComponent({ data, handleDelete }) {
   return (
     
     <View style={styles.c1}>
@@ -13,6 +14,7 @@ export default function CrComponent({ data }) {
           <Text style={styles.date}>Date: {data.dater}</Text>
           <Text style={styles.nbr}>Nbr-seance: {data.Nbrseance}</Text>
           <Text style={styles.status}>Status: {data.Status}</Text>
+          <Button title="Edit" onPress={() => handleDelete(data)} buttonStyle={{borderRadius:15, backgroundColor:"#0A1C7A"}}/>
         </View>
       </View>
     </View>
